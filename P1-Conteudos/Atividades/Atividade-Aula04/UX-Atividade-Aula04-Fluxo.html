@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fluxo de Usuário – Projeto Aetheris</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      padding: 30px 20px;
+      color: #333;
+    }
+    h1 { color: #2E4057; font-size: 22px; margin-bottom: 4px; }
+    h2 { color: #2E4057; font-size: 16px; margin: 28px 0 12px; border-bottom: 2px solid #2E4057; padding-bottom: 4px; }
+    .meta { font-size: 13px; color: #555; margin-bottom: 6px; }
+    .meta strong { color: #2E4057; }
+
+    /* ── Fluxo linear ── */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .step {
+      background: #ffffff;
+      padding: 10px 22px;
+      border-radius: 8px;
+      border: 2px solid #2E4057;
+      min-width: 320px;
+      max-width: 420px;
+      text-align: center;
+      font-size: 13px;
+    }
+    .step .label { font-weight: bold; color: #2E4057; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 3px; }
+    .step .action { color: #222; }
+    .step .system { color: #1A5276; font-size: 11px; margin-top: 3px; font-style: italic; }
+    .step .feeling { color: #1A7A4A; font-size: 11px; margin-top: 2px; }
+
+    .step.start  { border-color: #1A7A4A; background: #D5F5E3; }
+    .step.end    { border-color: #1A7A4A; background: #D5F5E3; }
+    .step.decision { border-color: #E67E22; background: #FEF9E7; transform: rotate(0deg); }
+
+    .arrow { font-size: 22px; color: #888; line-height: 1; margin: 2px 0; }
+
+    /* ── Fluxo com decisão ── */
+    .branch-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    .branch {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      margin: 4px 0;
+    }
+    .branch .flow { min-width: 260px; max-width: 300px; }
+    .branch-label {
+      font-size: 11px;
+      font-weight: bold;
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-bottom: 4px;
+      display: inline-block;
+    }
+    .branch-a .branch-label { background: #D5F5E3; color: #1A7A4A; }
+    .branch-b .branch-label { background: #FDEDEC; color: #922B21; }
+
+    /* ── Tabelas ── */
+    table { border-collapse: collapse; width: 100%; font-size: 12px; margin-top: 8px; }
+    th { background: #2E4057; color: #fff; padding: 7px 10px; text-align: left; }
+    td { border: 1px solid #ccc; padding: 7px 10px; vertical-align: top; }
+    tr:nth-child(even) td { background: #f8f9fa; }
+    td.highlight-a { background: #EAFAF1; }
+    td.highlight-b { background: #FDEDEC; }
+    td.highlight-c { background: #FEF9E7; }
+
+    .section { margin-bottom: 36px; }
+  </style>
+</head>
+<body>
+
+<h1>📌 Fluxo de Usuário – Projeto Aetheris</h1>
+<p class="meta"><strong>Persona:</strong> Carlos Eduardo Silva, 34 anos, Analista Ambiental</p>
+<p class="meta"><strong>Objetivo:</strong> Consultar, comparar e exportar séries temporais de dados de satélite (NDVI/EVI) de forma rápida e visual</p>
+<p class="meta"><strong>Disciplina:</strong> Experiência do Usuário – DSM – Prof.ª Lucineide – 1º Semestre/2026</p>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section">
+<h2>Exercício 1 – Fluxo Linear (Caminho Ideal)</h2>
+<div class="flow">
+
+  <div class="step start">
+    <div class="label">Início</div>
+    <div class="action">Carlos acessa o Aetheris pelo navegador</div>
+    <div class="system">↳ Sistema: Tela inicial com mapa interativo carregado</div>
+    <div class="feeling">😊 Curioso e motivado</div>
+  </div>
+  <div class="arrow">↓</div>
+
+  <div class="step">
+    <div class="label">Etapa 1 – Seleção de área</div>
+    <div class="action">Clica no mapa para selecionar uma área agrícola</div>
+    <div class="system">↳ Sistema: Área destacada visualmente, coordenadas confirmadas</div>
+    <div class="feeling">😌 Confiante — feedback imediato</div>
+  </div>
+  <div class="arrow">↓</div>
+
+  <div class="step">
+    <div class="label">Etapa 2 – Consulta ao catálogo STAC</div>
+    <div class="action">Escolhe satélite (Sentinel-2), variável (NDVI) e período</div>
+    <div class="system">↳ Sistema: Lista satélites com resolução e variáveis disponíveis</div>
+    <div class="feeling">🔍 Engajado — pode ficar ansioso se demorar</div>
+  </div>
+  <div class="arrow">↓</div>
+
+  <div class="step">
+    <div class="label">Etapa 3 – Visualização da série temporal</div>
+    <div class="action">Visualiza e compara gráficos de Sentinel-2 e Landsat-8</div>
+    <div class="system">↳ Sistema: Gráfico interativo lado a lado com legenda e tooltip</div>
+    <div class="feeling">😃 Satisfeito quando dados são claros</div>
+  </div>
+  <div class="arrow">↓</div>
+
+  <div class="step end">
+    <div class="label">Fim — Exportação</div>
+    <div class="action">Exporta metadados em CSV para relatório técnico</div>
+    <div class="system">↳ Sistema: Arquivo CSV com cabeçalhos e fonte identificados</div>
+    <div class="feeling">✅ Realizado — tarefa concluída com sucesso</div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section">
+<h2>Exercício 2 – Fluxo Refinado com Decisões Alternativas</h2>
+<div class="flow">
+
+  <div class="step start">
+    <div class="label">Início</div>
+    <div class="action">Carlos acessa o Aetheris</div>
+    <div class="system">↳ Mapa interativo carregado</div>
+  </div>
+  <div class="arrow">↓</div>
+
+  <div class="step">
+    <div class="label">Etapa 1 – Selecionar área</div>
+    <div class="action">Quer definir a área de análise</div>
+  </div>
+  <div class="arrow">↓</div>
+
+  <!-- Decisão 1 -->
+  <div class="step decision">
+    <div class="label">⬡ Decisão 1</div>
+    <div class="action">Como selecionar a área?</div>
+  </div>
+
+  <div class="branch">
+    <div class="flow branch-a">
+      <span class="branch-label">✅ Caminho A</span>
+      <div class="step">
+        <div class="label">Clique no mapa</div>
+        <div class="action">Área destacada automaticamente</div>
+        <div class="system">↳ Coordenadas preenchidas</div>
+      </div>
+    </div>
+    <div class="flow branch-b">
+      <span class="branch-label">🔄 Caminho B</span>
+      <div class="step">
+        <div class="label">Inserção manual</div>
+        <div class="action">Campo de coordenadas ativo</div>
+        <div class="system">↳ Validação em tempo real</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow">↓</div>
+  <div class="step">
+    <div class="label">Etapa 2 – Consulta STAC</div>
+    <div class="action">Seleciona satélite, variável e período</div>
+  </div>
+  <div class="arrow">↓</div>
+
+  <!-- Decisão 2 -->
+  <div class="step decision">
+    <div class="label">⬡ Decisão 2</div>
+    <div class="action">API retorna dados para a área e período?</div>
+  </div>
+
+  <div class="branch">
+    <div class="flow branch-a">
+      <span class="branch-label">✅ Sim — Dados disponíveis</span>
+      <div class="step">
+        <div class="label">Etapa 3 – Visualização</div>
+        <div class="action">Gráfico comparativo exibido</div>
+        <div class="system">↳ Tooltip e legenda interativos</div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="step end">
+        <div class="label">Fim – Exportação CSV</div>
+        <div class="action">Arquivo gerado com sucesso</div>
+        <div class="feeling">✅ Tarefa concluída</div>
+      </div>
+    </div>
+    <div class="flow branch-b">
+      <span class="branch-label">⚠️ Não — Sem dados</span>
+      <div class="step">
+        <div class="label">Mensagem explicativa</div>
+        <div class="action">Sistema sugere ampliar período ou trocar satélite</div>
+        <div class="system">↳ Sem tela em branco</div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="step">
+        <div class="label">Usuário ajusta filtros</div>
+        <div class="action">Retorna para Etapa 2</div>
+        <div class="feeling">🔄 Fluxo reiniciado</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section">
+<h2>Exercício 3 – Conexão com o Mapa de Jornada (Aula 03)</h2>
+<table>
+  <tr>
+    <th>Etapa do Fluxo</th>
+    <th>Ação no Fluxo</th>
+    <th>Etapa da Jornada (Aula 03)</th>
+    <th>Ponto de Dor Mapeado</th>
+    <th>Solução no Fluxo</th>
+  </tr>
+  <tr>
+    <td><strong>Início → Etapa 1</strong></td>
+    <td>Acessa o app e seleciona área no mapa</td>
+    <td class="highlight-a">Pré-consulta (Antes)</td>
+    <td>Não sabe quais satélites cobrem sua área</td>
+    <td>Exibir automaticamente cobertura disponível ao selecionar área</td>
+  </tr>
+  <tr>
+    <td><strong>Etapa 2 → Etapa 3</strong></td>
+    <td>Consulta STAC e visualiza gráfico comparativo</td>
+    <td class="highlight-c">Consulta principal (Durante)</td>
+    <td>Carregamento lento; gráficos confusos sem legenda</td>
+    <td>Barra de progresso + cores contrastantes e tooltip interativo</td>
+  </tr>
+  <tr>
+    <td><strong>Fim</strong></td>
+    <td>Exporta metadados em CSV</td>
+    <td class="highlight-a">Pós-consulta (Depois)</td>
+    <td>Arquivo exportado desorganizado, sem fonte</td>
+    <td>CSV estruturado com cabeçalhos claros e fonte identificada</td>
+  </tr>
+  <tr>
+    <td><strong>Decisão 2 – Caminho B</strong></td>
+    <td>Sem dados disponíveis para área/período</td>
+    <td class="highlight-b">Consulta principal (Durante)</td>
+    <td>Tela em branco sem explicação — usuário abandona</td>
+    <td>Mensagem orientativa com alternativas práticas</td>
+  </tr>
+</table>
+
+<p style="margin-top:16px; font-size:12px; color:#555; font-style:italic;">
+  <strong>Resumo:</strong> O fluxo de usuário traduz as 3 etapas da jornada (Antes / Durante / Depois) em ações concretas e 
+  respostas do sistema. Cada ponto de dor identificado na jornada da Aula 03 aparece como uma decisão ou oportunidade 
+  de melhoria no fluxo, preparando o terreno para a criação do wireframe nas próximas aulas.
+</p>
+</div>
+
+</body>
+</html>
